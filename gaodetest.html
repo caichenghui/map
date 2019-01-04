@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=2b3c0880fe16036dd5082172ff7679d2&plugin=AMap.CitySearch"></script>
+  <title>高德地图定位</title>
+</head>
+<body>
+  <script>
+    let mapObj = new AMap.Map("iCenter"), geolocation;
+    mapObj.plugin("AMap.Geolocation", ()=> {
+      geolocation = new AMap.Geolocation({
+        enableHighAccuracy: true, //是否使用高精度定位，默认:true
+      });
+      mapObj.addControl(geolocation);
+      geolocation.getCurrentPosition();
+      AMap.event.addListener(geolocation, "complete", (data)=> {
+        
+        alert(JSON.stringify(data));
+      }); //返回定位信息
+      AMap.event.addListener(geolocation, "error", (data)=> {
+        alert('定位失败');
+      }); //返回定位出错信息
+    });
+  </script>
+</body>
+</html>
